@@ -14,7 +14,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@contingent/fp-ts-extensions": ["packages/fp-ts-extensions/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

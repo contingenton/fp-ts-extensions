@@ -1,0 +1,34 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/fp-ts-extensions/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/fp-ts-extensions/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/fp-ts-extensions"],
+      "options": {
+        "jestConfig": "packages/fp-ts-extensions/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/fp-ts-extensions",
+        "tsConfig": "packages/fp-ts-extensions/tsconfig.lib.json",
+        "packageJson": "packages/fp-ts-extensions/package.json",
+        "main": "packages/fp-ts-extensions/src/index.ts",
+        "assets": ["packages/fp-ts-extensions/*.md"]
+      }
+    }
+  },
+  "tags": ["fp-ts-extensions"]
+}
