@@ -28,11 +28,16 @@ jobs:
       - name: Fetch other branches
         run: git fetch --no-tags --prune --depth=5 origin main
 
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v2
+        with:
+          last-successful-event: 'release'
+
       - name: Install packages
         run: npm ci
 
       - name: Run lint
-        run: npm run affected:lint -- --base="origin/main"
+        run: npx nx affected --target=lint
 
       - name: Tests coverage
-        run: npm run affected:test -- --base="origin/main" --codeCoverage
+        run: npx nx affected --target=test --codeCoverage

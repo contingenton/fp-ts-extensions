@@ -1,9 +1,8 @@
 name: Merge on main
 on:
-  pull_request:
+  push:
     branches:
       - main
-    types: [ closed ]
 #  workflow_dispatch:
 
 jobs:
@@ -14,19 +13,21 @@ jobs:
         node-version: [ 16.x ]
     steps:
       - name: Checkout Code
-        if: github.event.pull_request.merged == true && contains(github.event.commits[0].message, '[skip-ci]') == false
         uses: actions/checkout@v2
 
       - name: Fetch other branches
         run: git fetch --no-tags --prune --depth=5 origin main
 
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v2
+        with:
+          last-successful-event: 'release'
+
       - name: Install packages
         run: npm ci
 
-      - name: Publish
-        if: github.event.pull_request.merged == true && contains(github.event.commits[0].message, '[skip-ci]') == false
+      - name: Release
         env:
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-        run: |
-          npm config set //registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN
-          ./.github/scripts/publish-library.sh
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        run: npx semantic-release
