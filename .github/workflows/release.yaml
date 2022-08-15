@@ -22,7 +22,6 @@ jobs:
         uses: nrwl/nx-set-shas@v2
         with:
           last-successful-event: 'release'
-          branches: 'main'
 
       - name: Install packages
         run: npm ci
