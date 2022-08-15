@@ -1,1 +1,3 @@
-export const kickThis = () => {};
+export const kickThis = () => {
+  console.log('Kick..');
+};
