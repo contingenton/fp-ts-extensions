@@ -14,9 +14,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
-
-      - name: Fetch other branches
-        run: git fetch --no-tags --prune --depth=5 origin main
+        with:
+          fetch-depth: 0
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v2
