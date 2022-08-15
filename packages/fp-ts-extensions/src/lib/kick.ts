@@ -1,1 +1,1 @@
-export const kick = () => {};
+export const kickThis = () => {};
