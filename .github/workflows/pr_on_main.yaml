@@ -40,4 +40,4 @@ jobs:
         run: npx nx affected --target=lint
 
       - name: Tests coverage
-        run: npm run affected:test -- --base="origin/main" --codeCoverage
+        run: npx nx affected --target=test --codeCoverage
