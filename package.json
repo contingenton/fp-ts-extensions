@@ -1,5 +1,5 @@
 {
-  "name": "contingent",
+  "name": "@contingent/fp-ts-extensions",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
