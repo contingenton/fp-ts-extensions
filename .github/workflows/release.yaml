@@ -1,0 +1,29 @@
+name: Merge on main
+on:
+  pull_request:
+    branches:
+      - main
+    types: [ closed ]
+#  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 16.x ]
+    steps:
+      - name: Checkout Code
+        if: github.event.pull_request.merged == true && contains(github.event.commits[0].message, '[skip-ci]') == false
+        uses: actions/checkout@v2
+
+      - name: Fetch other branches
+        run: git fetch --no-tags --prune --depth=5 origin main
+
+      - name: Install packages
+        run: npm ci
+
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_GITHUB_TOKEN }}
+        run: npx semantic-release
