@@ -25,6 +25,9 @@ jobs:
       - name: Install packages
         run: npm ci
 
+      - name: Build library
+        run: npx nx affected --target=build
+
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_GITHUB_TOKEN }}
