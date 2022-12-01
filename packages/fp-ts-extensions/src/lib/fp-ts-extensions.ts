@@ -59,6 +59,7 @@ export const taskEitherChainTap =
       taskEither.chainW((a: A) =>
         pipe(
           taskEitherToChain(),
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           taskEither.map((b: B) => a)
         )
       )
@@ -76,17 +77,19 @@ export const taskEitherTapLeft =
     );
 
 export const logError =
-  (logger: (message: string, ...meta: any[]) => unknown) =>
-  (error: Error | unknown) => {
-    const e =
-      error instanceof Error
-        ? error
-        : new Error(`Unknown error: ${JSON.stringify(error)}`);
-    logger('An error occurred {error}', {
-      error: {
-        message: e.message,
-        stack: e.stack,
-      },
-    });
-    return e;
-  };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+    (logger: (message: string, ...meta: any[]) => unknown) =>
+    (error: Error | unknown) => {
+      const e =
+        error instanceof Error
+          ? error
+          : new Error(`Unknown error: ${JSON.stringify(error)}`);
+      logger('An error occurred {error}', {
+        error: {
+          message: e.message,
+          stack: e.stack,
+        },
+      });
+      return e;
+    };

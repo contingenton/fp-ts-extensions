@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import '@relmify/jest-fp-ts';
-import { taskEitherChainTap } from '@contingent/fp-ts-extensions';
+import { taskEitherChainTap } from './fp-ts-extensions';
 import { either, taskEither } from 'fp-ts';
 import { pipe } from 'fp-ts/function';
 
@@ -8,7 +9,6 @@ export class GetProjectionError extends Error {
 
   private constructor() {
     super('failed to get projection');
-    // eslint-disable-next-line functional/no-this-expression
     this._tag = 'GetProjectionError';
   }
 
@@ -21,7 +21,6 @@ export class AnotherError extends Error {
 
   private constructor() {
     super('something bad happened');
-    // eslint-disable-next-line functional/no-this-expression
     this._tag = 'AnotherError';
   }
 
@@ -32,7 +31,7 @@ describe('fp-ts extensions', () => {
   describe('taskEitherChainTap', () => {
     describe('when previous taskEither fails', () => {
       const getProjection = (
-        id: string
+        _: string
       ): taskEither.TaskEither<GetProjectionError, { id: string }> =>
         taskEither.left(GetProjectionError.of());
 
