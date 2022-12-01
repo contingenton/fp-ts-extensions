@@ -45,6 +45,17 @@ export const taskEitherTap =
         }),
       );
 
+export const taskEitherChainTap =
+  <E, A, B>(taskEitherToChain: ()=> taskEither.TaskEither<E, B>) =>
+    (te: taskEither.TaskEither<E, A>) =>
+      pipe(
+        te,
+        taskEither.chain((a:A)=> pipe(
+          taskEitherToChain(),
+          taskEither.map((b:B)=> a)
+        ))
+      );
+
 export const taskEitherTapLeft =
   <E, A>(action: (left: E) => void) =>
     (te: taskEither.TaskEither<E, A>) =>
