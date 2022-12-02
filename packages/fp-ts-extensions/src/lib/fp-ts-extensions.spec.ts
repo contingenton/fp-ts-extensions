@@ -3,7 +3,7 @@ import '@relmify/jest-fp-ts';
 import { taskEitherChainTap } from './fp-ts-extensions';
 import { either, taskEither } from 'fp-ts';
 import { pipe } from 'fp-ts/function';
-import {AnotherError, GetProjectionError} from "../fixtures/errors";
+import { AnotherError, GetProjectionError } from '../fixtures/errors';
 
 describe('fp-ts extensions', () => {
   describe('taskEitherChainTap', () => {
