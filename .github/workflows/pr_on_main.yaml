@@ -5,15 +5,14 @@ on:
   pull_request:
     branches:
       - main
-    types: [ opened, reopened, synchronize ]
-
+    types: [opened, reopened, synchronize]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 16.x ]
+        node-version: [18.x, 19.x]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -28,7 +27,7 @@ jobs:
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v3
         with:
-          last-successful-event: 'release'
+          last-successful-event: "release"
 
       - name: Install packages
         run: npm ci
