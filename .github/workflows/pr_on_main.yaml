@@ -5,30 +5,27 @@ on:
   pull_request:
     branches:
       - main
-    types: [ opened, reopened, synchronize ]
-
+    types: [opened, reopened, synchronize]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [ 16.x ]
+
     steps:
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version-file: ".tool-versions"
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v3
         with:
-          last-successful-event: 'release'
+          last-successful-event: "release"
 
       - name: Install packages
         run: npm ci
