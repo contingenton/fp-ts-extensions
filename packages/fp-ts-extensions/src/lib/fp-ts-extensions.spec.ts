@@ -10,7 +10,7 @@ describe('fp-ts extensions', () => {
     describe('when taskEither right option none', () => {
       class MyError extends Error {}
       class MappedError extends Error {}
-      let result: either.Either<MappedError, string>;
+      let result: either.Either<MyError | MappedError, string>;
       beforeEach(async () => {
         result = await pipe(
           taskEither.right<MyError, option.Option<string>>(option.none),

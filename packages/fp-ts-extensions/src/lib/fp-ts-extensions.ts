@@ -2,20 +2,20 @@ import { either, option, taskEither } from 'fp-ts';
 import { pipe } from 'fp-ts/function';
 
 export const errorOnNone =
-  <E extends Error, A>(
-    error: () => E
+  <E1, E2, A>(
+    error: () => E2
   ): ((
-    result: taskEither.TaskEither<E, option.Option<A>>
-  ) => taskEither.TaskEither<E, A>) =>
+    result: taskEither.TaskEither<E1, option.Option<A>>
+  ) => taskEither.TaskEither<E1 | E2, A>) =>
   (
-    result: taskEither.TaskEither<E, option.Option<A>>
-  ): taskEither.TaskEither<E, A> =>
+    result: taskEither.TaskEither<E1, option.Option<A>>
+  ): taskEither.TaskEither<E1 | E2, A> =>
     pipe(
       result,
       taskEither.chain(
         option.match(
-          () => taskEither.left(error()),
-          (a) => taskEither.right(a)
+          () => taskEither.left<E1 | E2, A>(error()),
+          (a) => taskEither.right<E1 | E2, A>(a)
         )
       )
     );
@@ -78,6 +78,7 @@ export const taskEitherTapLeft =
 
 export const logError =
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 
     (logger: (message: string, ...meta: any[]) => unknown) =>
     (error: Error | unknown) => {
