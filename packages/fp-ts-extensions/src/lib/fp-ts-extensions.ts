@@ -2,14 +2,14 @@ import { either, option, taskEither } from 'fp-ts';
 import { pipe } from 'fp-ts/function';
 
 export const errorOnNone =
-  <A>(
-    error: () => Error
+  <E extends Error, A>(
+    error: () => E
   ): ((
-    result: taskEither.TaskEither<Error, option.Option<A>>
-  ) => taskEither.TaskEither<Error, A>) =>
+    result: taskEither.TaskEither<E, option.Option<A>>
+  ) => taskEither.TaskEither<E, A>) =>
   (
-    result: taskEither.TaskEither<Error, option.Option<A>>
-  ): taskEither.TaskEither<Error, A> =>
+    result: taskEither.TaskEither<E, option.Option<A>>
+  ): taskEither.TaskEither<E, A> =>
     pipe(
       result,
       taskEither.chain(
@@ -65,17 +65,6 @@ export const taskEitherChainTap =
       )
     );
 
-export const taskEitherChainTap =
-  <E, A, B>(taskEitherToChain: ()=> taskEither.TaskEither<E, B>) =>
-    (te: taskEither.TaskEither<E, A>) =>
-      pipe(
-        te,
-        taskEither.chain((a:A)=> pipe(
-          taskEitherToChain(),
-          taskEither.map((b:B)=> a)
-        ))
-      );
-
 export const taskEitherTapLeft =
   <E, A>(action: (left: E) => void) =>
   (te: taskEither.TaskEither<E, A>) =>
@@ -89,6 +78,7 @@ export const taskEitherTapLeft =
 
 export const logError =
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 
     (logger: (message: string, ...meta: any[]) => unknown) =>
     (error: Error | unknown) => {
