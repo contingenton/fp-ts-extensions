@@ -1,11 +1,35 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import '@relmify/jest-fp-ts';
-import { taskEitherChainTap } from './fp-ts-extensions';
-import { either, taskEither } from 'fp-ts';
+import { errorOnNone, taskEitherChainTap } from './fp-ts-extensions';
+import { either, option, taskEither } from 'fp-ts';
 import { pipe } from 'fp-ts/function';
 import { AnotherError, GetProjectionError } from '../fixtures/errors';
 
 describe('fp-ts extensions', () => {
+  describe('errorOnNone', () => {
+    describe('when taskEither right option none', () => {
+      class MyError extends Error {}
+      class MappedError extends Error {}
+      let result: either.Either<MappedError, string>;
+      beforeEach(async () => {
+        result = await pipe(
+          taskEither.right<MyError, option.Option<string>>(option.none),
+          errorOnNone(() => new MappedError('mapped error'))
+        )();
+      });
+      it('should return left with the mapped error', () => {
+        expect(result).toBeLeft();
+        pipe(
+          result,
+          either.mapLeft((e) => {
+            expect(e instanceof MappedError).toBeTruthy();
+            expect(e.message).toEqual('mapped error');
+          })
+        );
+      });
+    });
+  });
+
   describe('taskEitherChainTap', () => {
     describe('when previous taskEither fails', () => {
       const getProjection = (
