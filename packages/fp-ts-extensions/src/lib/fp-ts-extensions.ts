@@ -2,14 +2,14 @@ import { either, option, taskEither } from 'fp-ts';
 import { pipe } from 'fp-ts/function';
 
 export const errorOnNone =
-  <A>(
-    error: () => Error
+  <E extends Error, A>(
+    error: () => E
   ): ((
-    result: taskEither.TaskEither<Error, option.Option<A>>
-  ) => taskEither.TaskEither<Error, A>) =>
+    result: taskEither.TaskEither<E, option.Option<A>>
+  ) => taskEither.TaskEither<E, A>) =>
   (
-    result: taskEither.TaskEither<Error, option.Option<A>>
-  ): taskEither.TaskEither<Error, A> =>
+    result: taskEither.TaskEither<E, option.Option<A>>
+  ): taskEither.TaskEither<E, A> =>
     pipe(
       result,
       taskEither.chain(
