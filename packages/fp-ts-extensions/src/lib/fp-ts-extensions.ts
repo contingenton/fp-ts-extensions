@@ -79,7 +79,6 @@ export const taskEitherTapLeft =
 export const logError =
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
-
     (logger: (message: string, ...meta: any[]) => unknown) =>
     (error: Error | unknown) => {
       const e =
