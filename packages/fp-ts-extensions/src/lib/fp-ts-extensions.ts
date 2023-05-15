@@ -1,5 +1,7 @@
-import { either, option, taskEither } from 'fp-ts';
+import { either, option, taskEither, apply } from 'fp-ts';
 import { pipe } from 'fp-ts/function';
+import { Errors, Validation } from 'io-ts';
+import * as RA from 'fp-ts/ReadonlyArray';
 
 export const errorOnNone =
   <E1, E2, A>(
@@ -94,3 +96,14 @@ export const logError =
       });
       return e;
     };
+
+export const ensureAllValid = <T>(arrayOfEither: readonly Validation<T>[]) =>
+  RA.reduce(either.right(new Array<T>()), (result: either.Either<Errors, T[]>, eitherItem: Validation<T>) =>
+    pipe(
+      apply.sequenceS(either.Monad)({
+        result,
+        entity: eitherItem as either.Either<Errors, T>,
+      }),
+      either.map(({ result, entity }) => [...result, entity]),
+    ),
+  )(arrayOfEither);
