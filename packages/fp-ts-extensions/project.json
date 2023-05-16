@@ -1,4 +1,5 @@
 {
+  "name": "fp-ts-extensions",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/fp-ts-extensions/src",
   "projectType": "library",
