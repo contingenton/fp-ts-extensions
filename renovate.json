@@ -1,12 +1,5 @@
 {
-  "extends": [
-    "config:base",
-    ":semanticCommits",
-    "group:monorepos",
-    "group:recommended"
-  ],
-  "assigneesFromCodeOwners": true,
-  "rangeStrategy": "replace",
+  "extends": ["config:js-lib", ":semanticCommits"],
   "packageRules": [
     {
       "matchSourceUrlPrefixes": [
