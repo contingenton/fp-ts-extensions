@@ -10,7 +10,7 @@
     "@nrwl/eslint-plugin-nx": "16.6.0",
     "@nrwl/jest": "16.6.0",
     "@nrwl/linter": "16.6.0",
-    "@nrwl/node": "^16.0.0",
+    "@nrwl/node": "16.0.3",
     "@nrwl/workspace": "16.6.0",
     "@relmify/jest-fp-ts": "2.0.2",
     "@types/jest": "29.5.3",
