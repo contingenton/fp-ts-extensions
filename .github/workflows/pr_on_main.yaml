@@ -23,7 +23,7 @@ jobs:
           node-version-file: ".tool-versions"
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
-        uses: nrwl/nx-set-shas@v3
+        uses: nrwl/nx-set-shas@v4
         with:
           last-successful-event: "release"
 
